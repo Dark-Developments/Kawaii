@@ -2,7 +2,7 @@
 <img src="src/main/resources/assets/kawaii/icon.png" width="40%"/>
 </p>
 
-<h1 align="center">Jinx² Client</h1>
+<h1 align="center">Kawaii</h1>
 
 <!--div style="display: grid; place-items: center;">
     <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/Dark-Developments/Jinx?color=black"> <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Nxyi/Jinx?color=black&label=Developers">
