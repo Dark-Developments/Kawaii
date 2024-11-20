@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.kawaii.mixin",
+  "mixins": [
+
+  ],
+  "client": [
+    "KeyboardMixin",
+    "MinecraftClientMixin",
+    "SplashTextResourceSupplierMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

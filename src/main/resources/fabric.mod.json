@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "kawaii",
+  "version": "${version}",
+  "name": "Kawaii",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/nxyi/Kawaii"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/kawaii/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.kawaii.Client"
+    ]
+  },
+  "mixins": [
+    "kawaii.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "*"
+  }
+}
