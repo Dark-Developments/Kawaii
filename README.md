@@ -1,13 +1,13 @@
-<div align="center">
-    <h1></h1>
-        <img src="https://raw.githubusercontent.com/Nxyi/ImGUITestClient/master/src/main/resources/assets/imguitest/icon.png" alt="Client Logo" width="400" height="400"/>
-        <p>A Basic minecraft java client that uses ImGUI implementation</p>
-</div>
+<p align="center">
+<img src="src/main/resources/assets/kawaii/icon.png" width="40%"/>
+</p>
 
-<div align="center" style="display: grid; place-items: center;">
-    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/Dark-Developments/ImGUITestClient?color=black"> <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Dark-Developments/ImGUITestClient?color=black&label=Developers">
-<img alt="GitHub contributors" src="https://img.shields.io/github/v/release/Dark-Developments/ImGUITestClient?display_name=tag&include_prereleases&color=black">
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Dark-Developments/ImGUITestClient/total?color=black">
+<h1 align="center">Jinx² Client</h1>
+
+<!--div style="display: grid; place-items: center;">
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/Dark-Developments/Jinx?color=black"> <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Nxyi/Jinx?color=black&label=Developers">
+<img alt="GitHub contributors" src="https://img.shields.io/github/v/release/Dark-Developments/Jinx?display_name=tag&include_prereleases&color=black">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Dark-Developments/Jinx/total?color=black">-->
 
 <div align="center">
   <a href="https://discord.gg/kja3YYV7R9"><img src="https://invidget.switchblade.xyz/kja3YYV7R9"></a>
@@ -15,9 +15,10 @@
 
 </div>
 
-## Why ImGUI?
+## Installation (Windows):
 
-- performant
-- relyability
-- simple to use
-- minimal changes needed when porting to newer minecraft versions
+- Download The .jar
+- Run the Fabric Loader and Pick Version 1.21.3
+- Click Win + R and put %appdata% in the text box
+- Navigate to the ".minecraft" folder then "mods"
+- Add the .jar to the mods folder and Run Minecraft 1.21 Fabric
