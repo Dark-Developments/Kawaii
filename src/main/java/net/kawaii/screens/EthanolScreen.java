@@ -1,7 +1,8 @@
 package net.kawaii.screens;
 
-import imgui.*;
-import imgui.flag.*;
+import imgui.ImGui;
+import imgui.flag.ImGuiCond;
+import imgui.flag.ImGuiTableFlags;
 import net.kawaii.Client;
 import net.kawaii.screens.base.ImGuiBaseScreen;
 import net.kawaii.utils.EthanolSystem;
@@ -29,7 +30,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
     private boolean loaded = false, showDemoScreen = false, showConsole = false;
     private EthanolServerListener listener = Client.EthanolListener;
     private CompletableFuture<Void> authFuture;
-    private EthanolConsole ethanolConsole = new EthanolConsole();
+    private EthanolConsole ethanolConsole;
 
     public EthanolScreen() {
         super("ClickGUI");
@@ -49,8 +50,9 @@ public class EthanolScreen extends ImGuiBaseScreen {
 
         ImUtil.draw(() -> {
             show();
+            if (showConsole) ethanolConsole.show();
+
             if (showDemoScreen) ImGui.showDemoWindow();
-            if (showConsole) showConsoleWindow();
         });
     }
 
@@ -153,6 +155,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
                     ImGui.sameLine();
 
                     if (ImGui.button("Console")) {
+                        ethanolConsole = new EthanolConsole(server.getAuthentication());
                         showConsole = true;
                     }
                 }
@@ -162,9 +165,5 @@ public class EthanolScreen extends ImGuiBaseScreen {
         }
 
         ImGui.end(); // End main window
-    }
-
-    private void showConsoleWindow() {
-        ethanolConsole.show();
     }
 }
