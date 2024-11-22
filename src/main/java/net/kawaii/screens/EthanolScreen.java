@@ -187,6 +187,17 @@ public class EthanolScreen extends ImGuiBaseScreen {
                         ImGui.setTooltip(String.format("Add %s to your multiplayer server list.", serverIP));  // Show tooltip when hovered
                     }
                     ImGui.popID();  // Reset the ID stack
+
+                    ImGui.sameLine();
+
+                    ImGui.pushID("copy_" + serverIP);  // Unique ID for the "Console" button
+                    if (ImGui.button("Copy")) {  // Same label for all buttons, but unique IDs
+                        mc.keyboard.setClipboard(serverIP);
+                    }
+                    if (ImGui.isItemHovered()) {
+                        ImGui.setTooltip(String.format("Copy %s to your clipboard", serverIP));  // Show tooltip when hovered
+                    }
+                    ImGui.popID();  // Reset the ID stack
                 }
 
                 ImGui.endTable();
