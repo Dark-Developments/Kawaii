@@ -101,13 +101,14 @@ public class EthanolScreen extends ImGuiBaseScreen {
                     }
 
                     authFuture = EthanolAPI.DEFAULT_AUTHENTICATOR.authenticateAsync(
-                            60000, opener
+                            60000, opener // Authentication with a timeout of 60 seconds
                     ).thenAccept(result -> {
+                        // Successful authentication callback
                         EthanolSystem.apiKey = result;
-                        ImGui.closeCurrentPopup(); // Close the popup after authentication
                     }).exceptionally(ex -> {
-                        ImGui.text("Failed to authenticate with Discord.");
-                        return null;
+                        // Log or handle specific exceptions here if needed (e.g., timeout)
+                        ex.printStackTrace();
+                        return null; // Return null to indicate that we handled the exception
                     });
 
                     ImGui.endPopup();
@@ -129,35 +130,45 @@ public class EthanolScreen extends ImGuiBaseScreen {
         } else {
             ImGui.text("Found %s server(s):".formatted(listener.getServers().length));
 
-            if (ImGui.beginTable("servers", 3,  ImGuiTableFlags.Reorderable | ImGuiTableFlags.Hideable | ImGuiTableFlags.BordersOuter | ImGuiTableFlags.RowBg| ImGuiTableFlags.BordersInnerV)) {
+            if (ImGui.beginTable("servers", 3, ImGuiTableFlags.Reorderable | ImGuiTableFlags.Hideable | ImGuiTableFlags.BordersOuter | ImGuiTableFlags.RowBg | ImGuiTableFlags.BordersInnerV)) {
                 ImGui.tableSetupColumn("IP");
                 ImGui.tableSetupColumn("Players");
                 ImGui.tableSetupColumn("Actions");
-                ImGui.tableSetupScrollFreeze(0, 1); // Make top row always visible
+//                ImGui.tableSetupScrollFreeze(0, 1); // Make top row always visible
                 ImGui.tableHeadersRow();
 
                 for (EthanolServer server : listener.getServers()) {
                     ImGui.tableNextRow();
+
                     String serverIP = server.getAddress().toString().substring(1);
                     String Players = "%s/%s".formatted(server.getOnlinePlayers(), server.getMaxPlayers());
 
+                    // Column 1 - IP
                     ImGui.tableSetColumnIndex(0);
                     ImGui.text(serverIP);
+
+                    // Column 2 - Players
                     ImGui.tableSetColumnIndex(1);
                     ImGui.text(Players);
+
+                    // Column 3 - Actions
                     ImGui.tableSetColumnIndex(2);
 
-                    if (ImGui.button("Join")) {
+                    ImGui.pushID("join_" + serverIP);  // Unique ID for the "Join" button
+                    if (ImGui.button("Join")) {  // Same label for all buttons, but unique IDs
                         ServerInfo info = new ServerInfo(serverIP, serverIP, ServerInfo.ServerType.OTHER);
                         ConnectScreen.connect(this, mc, ServerAddress.parse(serverIP), info, false, null);
                     }
+                    ImGui.popID();  // Reset the ID stack
 
                     ImGui.sameLine();
 
-                    if (ImGui.button("Console")) {
+                    ImGui.pushID("console_" + serverIP);  // Unique ID for the "Console" button
+                    if (ImGui.button("Console")) {  // Same label for all buttons, but unique IDs
                         ethanolConsole = new EthanolConsole(server.getAuthentication());
                         showConsole = true;
                     }
+                    ImGui.popID();  // Reset the ID stack
                 }
 
                 ImGui.endTable();
