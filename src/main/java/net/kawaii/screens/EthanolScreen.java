@@ -7,10 +7,12 @@ import net.kawaii.Client;
 import net.kawaii.screens.base.ImGuiBaseScreen;
 import net.kawaii.utils.EthanolSystem;
 import net.kawaii.utils.ImUtil;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.multiplayer.ConnectScreen;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
+import net.minecraft.client.option.ServerList;
 import net.minecraft.util.Util;
 import org.lwjgl.glfw.GLFW;
 import rocks.ethanol.ethanolapi.EthanolAPI;
@@ -151,6 +153,9 @@ public class EthanolScreen extends ImGuiBaseScreen {
                         ServerInfo info = new ServerInfo(serverIP, serverIP, ServerInfo.ServerType.OTHER);
                         ConnectScreen.connect(this, mc, ServerAddress.parse(serverIP), info, false, null);
                     }
+                    if (ImGui.isItemHovered()) {
+                        ImGui.setTooltip(String.format("Join the server %s.", serverIP));  // Show tooltip when hovered
+                    }
                     ImGui.popID();  // Reset the ID stack
 
                     ImGui.sameLine();
@@ -159,6 +164,27 @@ public class EthanolScreen extends ImGuiBaseScreen {
                     if (ImGui.button("Console")) {  // Same label for all buttons, but unique IDs
                         ethanolConsole = new EthanolConsole(server);
                         showConsole = true;
+                    }
+                    if (ImGui.isItemHovered()) {
+                        ImGui.setTooltip(String.format("Open the ethanol console for %s.", serverIP));  // Show tooltip when hovered
+                    }
+                    ImGui.popID();  // Reset the ID stack
+
+                    ImGui.sameLine();
+
+                    ImGui.pushID("add_" + serverIP);  // Unique ID for the "Console" button
+                    if (ImGui.button("Add")) {  // Same label for all buttons, but unique IDs
+                        final ServerList serverList = new ServerList(MinecraftClient.getInstance());
+                        serverList.loadFile();
+                        serverList.add(new ServerInfo(
+                                serverIP,
+                                serverIP,
+                                ServerInfo.ServerType.OTHER
+                        ), false);
+                        serverList.saveFile();
+                    }
+                    if (ImGui.isItemHovered()) {
+                        ImGui.setTooltip(String.format("Add %s to your multiplayer server list.", serverIP));  // Show tooltip when hovered
                     }
                     ImGui.popID();  // Reset the ID stack
                 }
