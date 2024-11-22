@@ -21,7 +21,7 @@ public class EthanolConsole extends ImGuiBaseScreen {
     private final List<String> consoleOutput = new ArrayList<>();
     private final EthanolServer server;
     private EthanolServerConnector connector;
-    private ImBoolean open;
+    private ImBoolean isOpen;
 
     public EthanolConsole(EthanolServer server) {
         super("EthanolConsole");
@@ -54,20 +54,20 @@ public class EthanolConsole extends ImGuiBaseScreen {
             }
         }));
 
-        open = new ImBoolean(true);
+        isOpen = new ImBoolean(true);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-
+        // dont call the super. cause this is a child-screen
     }
 
     public void show() {
-        if (!open.get()) return;
+        if (!isOpen.get()) return;
 
         ImGui.setNextWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT, ImGuiCond.FirstUseEver);
 
-        if (!ImGui.begin("Console - " + server.getAddress(), open)) {
+        if (!ImGui.begin("Console - " + server.getAddress(), isOpen)) {
             EthanolScreen.INSTANCE.showConsole = false;
             ImGui.end();
             return;
