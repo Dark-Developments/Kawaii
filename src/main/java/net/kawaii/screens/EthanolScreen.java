@@ -7,7 +7,6 @@ import net.kawaii.screens.base.ImGuiBaseScreen;
 import net.kawaii.utils.EthanolSystem;
 import net.kawaii.utils.ImUtil;
 import net.minecraft.client.gui.DrawContext;
-
 import net.minecraft.client.gui.screen.multiplayer.ConnectScreen;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
@@ -21,14 +20,16 @@ import rocks.ethanol.ethanolapi.server.listener.exceptions.EthanolServerListener
 import rocks.ethanol.ethanolapi.structure.ThrowingConsumer;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 import static net.kawaii.Client.mc;
 
 public class EthanolScreen extends ImGuiBaseScreen {
     public static EthanolScreen INSTANCE = new EthanolScreen();
-    private boolean loaded = false, showDemoScreen = false;
+    private boolean loaded = false, showDemoScreen = false, showConsole = false;
     private EthanolServerListener listener = Client.EthanolListener;
-
+    private CompletableFuture<Void> authFuture;
+    private EthanolConsole ethanolConsole = new EthanolConsole();
 
     public EthanolScreen() {
         super("ClickGUI");
@@ -49,6 +50,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
         ImUtil.draw(() -> {
             show();
             if (showDemoScreen) ImGui.showDemoWindow();
+            if (showConsole) showConsoleWindow();
         });
     }
 
@@ -75,6 +77,10 @@ public class EthanolScreen extends ImGuiBaseScreen {
             if (ImGui.button("Login")) {
                 ImGui.openPopup("DiscordLogin");
 
+                if (authFuture != null && !authFuture.isDone()) {
+                    authFuture.cancel(true); // Cancel the previous authentication task
+                }
+
                 if (ImGui.beginPopupModal("DiscordLogin")) {
                     ThrowingConsumer<DiscordAuthURL, IOException> opener = url -> {
                         Util.getOperatingSystem().open(url.toURI());
@@ -87,24 +93,20 @@ public class EthanolScreen extends ImGuiBaseScreen {
                         String url = EthanolAPI.DEFAULT_AUTHENTICATOR.getUrl().toString();
                         mc.keyboard.setClipboard(url);
                     }
-//
+
                     if (ImGui.button("Close")) {
                         ImGui.closeCurrentPopup(); // Ensure proper popup closure
                     }
 
-                    try {
-                        EthanolAPI.DEFAULT_AUTHENTICATOR.authenticateAsync(
-                                60000, opener
-                        ).thenAccept(result -> {
-                            EthanolSystem.apiKey = result;
-                            ImGui.closeCurrentPopup(); // Close the popup after authentication
-                        }).exceptionally(ex -> {
-                            ImGui.text("Failed to authenticate with Discord.");
-                            return null;
-                        });
-                    } catch (Exception e) {
-                        ImGui.text("Unexpected error: " + e.getMessage());
-                    }
+                    authFuture = EthanolAPI.DEFAULT_AUTHENTICATOR.authenticateAsync(
+                            60000, opener
+                    ).thenAccept(result -> {
+                        EthanolSystem.apiKey = result;
+                        ImGui.closeCurrentPopup(); // Close the popup after authentication
+                    }).exceptionally(ex -> {
+                        ImGui.text("Failed to authenticate with Discord.");
+                        return null;
+                    });
 
                     ImGui.endPopup();
                 }
@@ -151,7 +153,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
                     ImGui.sameLine();
 
                     if (ImGui.button("Console")) {
-                        // MeteorClient.mc.setScreen(new EthanolConsoleScreen(server.getAuthentication()));
+                        showConsole = true;
                     }
                 }
 
@@ -162,4 +164,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
         ImGui.end(); // End main window
     }
 
+    private void showConsoleWindow() {
+        ethanolConsole.show();
+    }
 }

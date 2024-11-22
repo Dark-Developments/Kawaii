@@ -25,6 +25,20 @@ public class Client implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+     System.out.println("""
+               
+               _
+              {_}
+              |(|
+              |=|
+             /   \\
+             |.--|  
+             ||  | 
+             ||  | 
+             |'--|
+             '-=-'
+             
+             """);
 
     }
 }
