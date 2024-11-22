@@ -58,7 +58,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == GLFW.GLFW_KEY_Q && modifiers == GLFW.GLFW_MOD_SHIFT){
+        if (keyCode == GLFW.GLFW_KEY_TAB && modifiers == GLFW.GLFW_MOD_SHIFT){
             showDemoScreen = !showDemoScreen;
         }
 
