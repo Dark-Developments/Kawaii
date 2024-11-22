@@ -20,6 +20,7 @@
 - Click Win + R and put %appdata% in the text box
 - Navigate to the ".minecraft" folder, then to "mods"
 - Add the .jar to the mods folder and run Minecraft 1.21 Fabric
+- Default keybind is HOME. you can change this in the default minecraft keybinds menu.
 
 ## Example Images:
 
