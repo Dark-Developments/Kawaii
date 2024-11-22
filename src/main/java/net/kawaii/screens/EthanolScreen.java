@@ -68,7 +68,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
     }
 
     public void show() {
-        ImGui.setNextWindowSize(350, 400, ImGuiCond.Once);
+        ImGui.setNextWindowSize(500, 520, ImGuiCond.FirstUseEver);
 
         if (!ImGui.begin("Ethanol")) { // Start Custom window
             ImGui.end(); // Always call end if begin fails
