@@ -83,6 +83,7 @@ public class EthanolConsole {
         ImGui.endChild();
 
         // Input box for user commands
+        ImGui.setKeyboardFocusHere();
         if (ImGui.inputText("Input", consoleInputText, ImGuiInputTextFlags.EnterReturnsTrue)) {
             String newText = consoleInputText.get();
             consoleInputText.set("");
@@ -98,9 +99,6 @@ public class EthanolConsole {
                     appendConsoleOutput("Error sending message: " + e.getMessage());
                 }
             }
-
-            // Keep the input box focused and selected
-            ImGui.setKeyboardFocusHere(0);
         }
 
         ImGui.sameLine();
