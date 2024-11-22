@@ -1,5 +1,5 @@
 <p align="center">
-<img src="src/main/resources/assets/kawaii/icon.png" width="40%"/>
+<img src="src/main/resources/assets/kawaii/icon1.png" width="40%"/>
 </p>
 
 <h1 align="center">Kawaii</h1>
