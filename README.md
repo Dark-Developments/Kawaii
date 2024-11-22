@@ -8,6 +8,9 @@
 
 <div align="center">
   <a href="https://discord.gg/kja3YYV7R9"><img src="https://invidget.switchblade.xyz/kja3YYV7R9"></a>
+</div>
+
+<div align="center">
 
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/Dark-Developments/Kawaii?color=black"> 
   <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Nxyi/kawaii?color=black&label=Developers">
