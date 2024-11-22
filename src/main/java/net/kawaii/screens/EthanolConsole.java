@@ -5,8 +5,6 @@ import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImString;
-import net.kawaii.screens.base.ImGuiBaseScreen;
-import net.minecraft.client.gui.DrawContext;
 import rocks.ethanol.ethanolapi.EthanolAPI;
 import rocks.ethanol.ethanolapi.server.connector.EthanolServerConnector;
 import rocks.ethanol.ethanolapi.server.listener.EthanolServer;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class EthanolConsole extends ImGuiBaseScreen {
+public class EthanolConsole {
     private static final int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 300, INPUT_TEXT_LENGTH = 256;
     private final ImString consoleInputText = new ImString(INPUT_TEXT_LENGTH);
     private final List<String> consoleOutput = new ArrayList<>();
@@ -24,7 +22,6 @@ public class EthanolConsole extends ImGuiBaseScreen {
     private ImBoolean isOpen;
 
     public EthanolConsole(EthanolServer server) {
-        super("EthanolConsole");
         this.server = server;
         this.connector = EthanolAPI.connect(server.getAuthentication());
 
@@ -55,11 +52,6 @@ public class EthanolConsole extends ImGuiBaseScreen {
         }));
 
         isOpen = new ImBoolean(true);
-    }
-
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        // dont call the super. cause this is a child-screen
     }
 
     public void show() {
