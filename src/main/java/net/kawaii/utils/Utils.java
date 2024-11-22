@@ -20,7 +20,7 @@ public class Utils {
     }
 
     public static boolean canOpenGuiMenu(){
-        return mc.currentScreen instanceof TitleScreen || mc.currentScreen instanceof MultiplayerScreen || mc.currentScreen instanceof SelectWorldScreen;
+        return canOpenGuiMenu(mc.currentScreen);
     }
 
     public static boolean canOpenGui(Screen screen) {
@@ -30,7 +30,7 @@ public class Utils {
     }
 
     public static boolean canOpenGuiMenu(Screen screen){
-        return  screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen;
+        return screen == null || screen instanceof TitleScreen || screen instanceof MultiplayerScreen || screen instanceof SelectWorldScreen;
     }
 
 }

@@ -165,7 +165,7 @@ public class EthanolScreen extends ImGuiBaseScreen {
 
                     ImGui.pushID("console_" + serverIP);  // Unique ID for the "Console" button
                     if (ImGui.button("Console")) {  // Same label for all buttons, but unique IDs
-                        ethanolConsole = new EthanolConsole(server.getAuthentication());
+                        ethanolConsole = new EthanolConsole(server);
                         showConsole = true;
                     }
                     ImGui.popID();  // Reset the ID stack

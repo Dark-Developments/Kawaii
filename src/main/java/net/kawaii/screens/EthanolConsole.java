@@ -8,6 +8,7 @@ import net.kawaii.screens.base.ImGuiBaseScreen;
 import net.minecraft.client.gui.DrawContext;
 import rocks.ethanol.ethanolapi.EthanolAPI;
 import rocks.ethanol.ethanolapi.server.connector.EthanolServerConnector;
+import rocks.ethanol.ethanolapi.server.listener.EthanolServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,13 @@ public class EthanolConsole extends ImGuiBaseScreen {
     private final ImString consoleInputText = new ImString(INPUT_TEXT_LENGTH);
     private final List<String> consoleOutput = new ArrayList<>();
     private final String authKey;
+    private final EthanolServer server;
     private EthanolServerConnector connector;
 
-    public EthanolConsole(String authKey) {
+    public EthanolConsole(EthanolServer server) {
         super("EthanolConsole");
-        this.authKey = authKey;
+        this.server = server;
+        this.authKey = server.getAuthentication();
         this.connector = EthanolAPI.connect(authKey);
 
         // Connect to the server asynchronously
@@ -57,8 +60,7 @@ public class EthanolConsole extends ImGuiBaseScreen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        // Render the ImGui interface
-        show();
+
     }
 
     public void show() {
@@ -66,14 +68,15 @@ public class EthanolConsole extends ImGuiBaseScreen {
 
         ImGui.setNextWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT, ImGuiCond.FirstUseEver);
 
-        if (!ImGui.begin("Console")) {
+        if (!ImGui.begin("Console - " + server.getAddress())) {
             ImGui.end();
             return;
         }
 
-        // Display console output
+        // Create a scrollable area for the console output
         ImGui.beginChild("Output", 0, -ImGui.getFrameHeightWithSpacing() - 10, true);
-        synchronized (consoleOutput) { // Synchronize access to consoleOutput
+
+        synchronized (consoleOutput) {
             for (String line : consoleOutput) {
                 ImGui.text(line);
             }
@@ -96,10 +99,14 @@ public class EthanolConsole extends ImGuiBaseScreen {
                     appendConsoleOutput("Error sending message: " + e.getMessage());
                 }
             }
+
+            // Keep the input box focused and selected
+            ImGui.setKeyboardFocusHere(0);
         }
 
         ImGui.end();
     }
+
 
     private void appendConsoleOutput(String message) {
         synchronized (consoleOutput) {
