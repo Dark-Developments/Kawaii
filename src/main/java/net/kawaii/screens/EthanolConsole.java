@@ -20,6 +20,7 @@ public class EthanolConsole {
     private final EthanolServer server;
     private EthanolServerConnector connector;
     private ImBoolean isOpen;
+    private ImBoolean autoScroll = new ImBoolean(true); // Toggle for auto-scrolling
 
     public EthanolConsole(EthanolServer server) {
         this.server = server;
@@ -73,6 +74,12 @@ public class EthanolConsole {
                 ImGui.text(line);
             }
         }
+
+        // Automatically scroll to the bottom if auto-scrolling is enabled
+        if (autoScroll.get()) {
+            ImGui.setScrollY(ImGui.getScrollMaxY()); // Scroll to the bottom
+        }
+
         ImGui.endChild();
 
         // Input box for user commands
@@ -96,9 +103,11 @@ public class EthanolConsole {
             ImGui.setKeyboardFocusHere(0);
         }
 
+        ImGui.sameLine();
+        ImGui.checkbox("Auto Scroll", autoScroll);
+
         ImGui.end();
     }
-
 
     private void appendConsoleOutput(String message) {
         synchronized (consoleOutput) {
