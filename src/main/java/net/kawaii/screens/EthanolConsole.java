@@ -3,6 +3,7 @@ package net.kawaii.screens;
 import imgui.ImGui;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiInputTextFlags;
+import imgui.type.ImBoolean;
 import imgui.type.ImString;
 import net.kawaii.screens.base.ImGuiBaseScreen;
 import net.minecraft.client.gui.DrawContext;
@@ -15,21 +16,17 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class EthanolConsole extends ImGuiBaseScreen {
-    private static final int WINDOW_WIDTH = 500;
-    private static final int WINDOW_HEIGHT = 300;
-    private static final int INPUT_TEXT_LENGTH = 256;
-
+    private static final int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 300, INPUT_TEXT_LENGTH = 256;
     private final ImString consoleInputText = new ImString(INPUT_TEXT_LENGTH);
     private final List<String> consoleOutput = new ArrayList<>();
-    private final String authKey;
     private final EthanolServer server;
     private EthanolServerConnector connector;
+    private ImBoolean open;
 
     public EthanolConsole(EthanolServer server) {
         super("EthanolConsole");
         this.server = server;
-        this.authKey = server.getAuthentication();
-        this.connector = EthanolAPI.connect(authKey);
+        this.connector = EthanolAPI.connect(server.getAuthentication());
 
         // Connect to the server asynchronously
         CompletableFuture<EthanolServerConnector> future = connector.startAsync();
@@ -56,6 +53,8 @@ public class EthanolConsole extends ImGuiBaseScreen {
                 appendConsoleOutput("Error closing connector: " + e.getMessage());
             }
         }));
+
+        open = new ImBoolean(true);
     }
 
     @Override
@@ -64,11 +63,12 @@ public class EthanolConsole extends ImGuiBaseScreen {
     }
 
     public void show() {
-        if (authKey == null) return;
+        if (!open.get()) return;
 
         ImGui.setNextWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT, ImGuiCond.FirstUseEver);
 
-        if (!ImGui.begin("Console - " + server.getAddress())) {
+        if (!ImGui.begin("Console - " + server.getAddress(), open)) {
+            EthanolScreen.INSTANCE.showConsole = false;
             ImGui.end();
             return;
         }

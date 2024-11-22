@@ -27,7 +27,7 @@ import static net.kawaii.Client.mc;
 
 public class EthanolScreen extends ImGuiBaseScreen {
     public static EthanolScreen INSTANCE = new EthanolScreen();
-    private boolean loaded = false, showDemoScreen = false, showConsole = false;
+    public boolean loaded = false, showDemoScreen = false, showConsole = false;
     private EthanolServerListener listener = Client.EthanolListener;
     private CompletableFuture<Void> authFuture;
     private EthanolConsole ethanolConsole;
@@ -76,43 +76,35 @@ public class EthanolScreen extends ImGuiBaseScreen {
         String apikey = EthanolSystem.apiKey;
 
         if (apikey.isEmpty()) {
-            if (ImGui.button("Login")) {
-                ImGui.openPopup("DiscordLogin");
+            ImGui.text("Please authenticate with Discord in your browser.");
+            ImGui.text("The browser didn't open? Click below to copy the link and open it manually.");
 
+            if (ImGui.button("Login")) {
                 if (authFuture != null && !authFuture.isDone()) {
                     authFuture.cancel(true); // Cancel the previous authentication task
                 }
 
-                if (ImGui.beginPopupModal("DiscordLogin")) {
-                    ThrowingConsumer<DiscordAuthURL, IOException> opener = url -> {
-                        Util.getOperatingSystem().open(url.toURI());
-                    };
+                ThrowingConsumer<DiscordAuthURL, IOException> opener = url -> {
+                    Util.getOperatingSystem().open(url.toURI());
+                };
 
-                    ImGui.text("Please authenticate with Discord in your browser.");
-                    ImGui.text("The browser didn't open? Click below to copy the link and open it manually.");
+                authFuture = EthanolAPI.DEFAULT_AUTHENTICATOR.authenticateAsync(
+                        60000, opener // Authentication with a timeout of 60 seconds
+                ).thenAccept(result -> {
+                    // Successful authentication callback
+                    EthanolSystem.apiKey = result;
+                }).exceptionally(ex -> {
+                    // Log or handle specific exceptions here if needed (e.g., timeout)
+                    ex.printStackTrace();
+                    return null; // Return null to indicate that we handled the exception
+                });
+            }
 
-                    if (ImGui.button("Copy")) {
-                        String url = EthanolAPI.DEFAULT_AUTHENTICATOR.getUrl().toString();
-                        mc.keyboard.setClipboard(url);
-                    }
+            ImGui.sameLine();
 
-                    if (ImGui.button("Close")) {
-                        ImGui.closeCurrentPopup(); // Ensure proper popup closure
-                    }
-
-                    authFuture = EthanolAPI.DEFAULT_AUTHENTICATOR.authenticateAsync(
-                            60000, opener // Authentication with a timeout of 60 seconds
-                    ).thenAccept(result -> {
-                        // Successful authentication callback
-                        EthanolSystem.apiKey = result;
-                    }).exceptionally(ex -> {
-                        // Log or handle specific exceptions here if needed (e.g., timeout)
-                        ex.printStackTrace();
-                        return null; // Return null to indicate that we handled the exception
-                    });
-
-                    ImGui.endPopup();
-                }
+            if (ImGui.button("Copy")) {
+                String url = EthanolAPI.DEFAULT_AUTHENTICATOR.getUrl().toString();
+                mc.keyboard.setClipboard(url);
             }
         }
 
