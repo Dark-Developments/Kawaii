@@ -83,7 +83,6 @@ public class EthanolConsole {
         ImGui.endChild();
 
         // Input box for user commands
-        ImGui.setKeyboardFocusHere();
         if (ImGui.inputText("Input", consoleInputText, ImGuiInputTextFlags.EnterReturnsTrue)) {
             String newText = consoleInputText.get();
             consoleInputText.set("");
