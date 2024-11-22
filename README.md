@@ -22,11 +22,20 @@
 - Add the .jar to the mods folder and run Minecraft 1.21 Fabric
 - Default keybind is HOME. you can change this in the default minecraft keybinds menu.
 
-## Example Images:
+## Examples:
 
 <p align="center">
   <a href="https://r2.e-z.host/a6b84dbb-4f7f-499e-93b4-0ae8c59b2213/z71fyydr.png">
     <img src="https://r2.e-z.host/a6b84dbb-4f7f-499e-93b4-0ae8c59b2213/z71fyydr.png" width="80%" alt="Example Image 1"/>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://cute.femboy-for-sale.com/preview/7lo9zdjl.mp4">
+    <video width="80%" controls>
+      <source src="https://cute.femboy-for-sale.com/preview/7lo9zdjl.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </a>
 </p>
 
