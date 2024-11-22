@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;onResolutionChanged()V"))
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
     private void oninitfin(RunArgs args, CallbackInfo ci) {
         ImUtil.initImGUI();
     }

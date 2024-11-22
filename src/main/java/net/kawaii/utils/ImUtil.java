@@ -29,7 +29,6 @@ public class ImUtil {
 
         ImGui.endFrame();
         ImGui.render();
-
         ImGL3.renderDrawData(ImGui.getDrawData());
     }
 
