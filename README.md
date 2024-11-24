@@ -29,8 +29,6 @@
 
 ## Examples:
 
-https://r2.e-z.host/a6b84dbb-4f7f-499e-93b4-0ae8c59b2213/7lo9zdjl.mp4
-
 <p align="center">
   <a href="https://r2.e-z.host/a6b84dbb-4f7f-499e-93b4-0ae8c59b2213/7lo9zdjl.mp4">
     <img src="https://r2.e-z.host/a6b84dbb-4f7f-499e-93b4-0ae8c59b2213/wgvd9dz6.png" width="80%" alt="Example Image 1"/>
