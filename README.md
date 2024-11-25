@@ -18,6 +18,9 @@
   <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Dark-Developments/Kawaii/total?color=black">
 </div>
 
+# Info:
+- to anyone trying to use this with ethanolmod. if you are experiencing issues try building ethanolmod from the source. as releases may not be up to date. as of writing this, this is an issue
+
 ## Installation (Windows):
 
 - Download the .jar
