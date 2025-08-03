@@ -3,11 +3,12 @@
   "minVersion": "0.8",
   "package": "net.kawaii.mixin",
   "mixins": [
-
   ],
   "client": [
     "KeyboardMixin",
     "MinecraftClientMixin",
+    "MixinGlCommandEncoder",
+    "MixinRenderSystem",
     "SplashTextResourceSupplierMixin"
   ],
   "injectors": {
