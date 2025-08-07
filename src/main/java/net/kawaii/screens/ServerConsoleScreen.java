@@ -83,6 +83,7 @@ public class ServerConsoleScreen extends Screen {
 		addDrawableChild(output);
 
 		input = new TextFieldWidget(this.textRenderer, 20, this.height - 30, this.width - 40, 20, Text.empty());
+		input.setMaxLength(500);
 		input.setPlaceholder(ENTER_COMMAND);
 		addDrawableChild(input);
 	}
