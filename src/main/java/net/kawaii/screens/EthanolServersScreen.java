@@ -36,7 +36,6 @@ public class EthanolServersScreen extends Screen {
     private CustomServerListPinger multiplayerServerListPinger = new CustomServerListPinger();
     private EthanolServerListener listener = Client.EthanolListener;
     Screen parent = null;
-    List<String> servers = List.of("45.179.80.174:25567", "play.minehut.com", "play.minefort.com");
     private boolean initialized = false;
 
     private final ServerList serverList = new ServerList();
@@ -76,10 +75,6 @@ public class EthanolServersScreen extends Screen {
             for (EthanolServer server : listener.getServers()){
                 String substring = server.getAddress().toString().substring(1);
                 serverList.add(new ServerInfo(substring, substring, ServerInfo.ServerType.OTHER));
-            }
-
-            for (String s : servers){
-                serverList.add(new ServerInfo(s, s, ServerInfo.ServerType.OTHER));
             }
 
             this.serverListWidget.setServers(this.serverList);
