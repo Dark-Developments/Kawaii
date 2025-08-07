@@ -24,20 +24,15 @@ public class KeyboardMixin {
         if (Client.mc.player == null || Client.mc.world == null) return;
         if (Client.mc.getNetworkHandler() == null || !Client.mc.getNetworkHandler().isConnectionOpen()) return;
         if (!Utils.canOpenGuiMenu()) return;
-        Client.LOGGER.info("Can Open");
 
         if (EthanolSystem.apiKey != null);
 
-        Client.LOGGER.info("Got Key");
 
         EthanolServerListener listener = Client.EthanolListener;
         if (listener == null) return;
 
-        Client.LOGGER.info("Listener Alive");
-
         for (EthanolServer server : listener.getServers()) {
             if (server.getAddress().toString().substring(1).equals(Objects.requireNonNull(Client.mc.getNetworkHandler().getServerInfo()).address)) {
-                Client.LOGGER.info("Got Server");
                 Client.mc.setScreen(new ServerConsoleScreen(server));
                 break;
             }
