@@ -5,11 +5,12 @@
   "mixins": [
   ],
   "client": [
+    "AddressResolverMixin",
+    "GameMenuMixin",
     "KeyboardMixin",
-    "MinecraftClientMixin",
     "MixinGlCommandEncoder",
-    "MixinRenderSystem",
-    "SplashTextResourceSupplierMixin"
+    "SplashTextResourceSupplierMixin",
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

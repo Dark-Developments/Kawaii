@@ -19,6 +19,7 @@
   "mixins": [
     "kawaii.mixins.json"
   ],
+  "accessWidener": "kawaii.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
