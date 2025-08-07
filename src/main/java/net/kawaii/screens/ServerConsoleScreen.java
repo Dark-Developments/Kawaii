@@ -47,10 +47,10 @@ public class ServerConsoleScreen extends Screen {
 
 		future.thenAccept(conn -> {
 			appendConsoleOutput("Connected to the server!");
-
 			// Listen for messages from the server
-			conn.listen(message -> appendConsoleOutput("Server: " + message));
-
+			new Thread(() -> {
+				conn.listen(message -> appendConsoleOutput("Server: " + message));
+			});
 		}).exceptionally(ex -> {
 			appendConsoleOutput("Failed to connect: " + ex.getMessage());
 			return null;
