@@ -96,6 +96,8 @@ public class EthanolServersScreen extends Screen {
         axisGridWidget.add(this.consoleButton);
         directionalLayoutWidget.add(EmptyWidget.ofHeight(4));
         AxisGridWidget axisGridWidget2 = (AxisGridWidget)directionalLayoutWidget.add(new AxisGridWidget(308, 20, AxisGridWidget.DisplayAxis.HORIZONTAL));
+        ButtonWidget buttonWidget3 = (ButtonWidget)this.addDrawableChild(ButtonWidget.builder(Text.translatable("selectServer.refresh"), (button) -> this.refresh()).width(74).build());
+        axisGridWidget2.add(buttonWidget3);
         axisGridWidget2.add(buttonWidget4);
         directionalLayoutWidget.refreshPositions();
         SimplePositioningWidget.setPos(directionalLayoutWidget, 0, this.height - 64, this.width, 64);
@@ -106,6 +108,11 @@ public class EthanolServersScreen extends Screen {
     @Override
     public void close() {
         Client.mc.setScreen(this.parent);
+    }
+
+    private void refresh() {
+        EthanolServersScreen.INSTANCE = null;
+        this.client.setScreen(EthanolServersScreen.instance(this.parent));
     }
 
     @Override
